@@ -271,3 +271,16 @@ button.reaction-button {
 .notification.new {
   background-color: rgba(29, 161, 242, 0.1);
 }
+
+.LikeBtn span {
+  display: block;
+  color: #1976d2;
+}
+
+.TotalLikes {
+  background-color: #1976d2;
+  margin: 10px;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+}
