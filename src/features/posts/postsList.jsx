@@ -7,8 +7,10 @@ import { PostAuthor } from './PostAuthor'
 import { TimeAgo } from './TimeAgo'
 import { ReactionButtons } from './ReactionButtons'
 
+import { selectAllPosts } from './postsSlice'
+
 export const PostsList = () => {
-  const posts = useSelector((state) => state.posts)
+  const posts = useSelector(selectAllPosts)
 
   const orderedPosts = posts
     .slice()
@@ -25,7 +27,7 @@ export const PostsList = () => {
         <Link to={`/posts/${post.id}`} className="button muted-button">
           View Post
         </Link>
-        <ReactionButtons post={post}/>
+        <ReactionButtons post={post} />
       </article>
     )
   })
