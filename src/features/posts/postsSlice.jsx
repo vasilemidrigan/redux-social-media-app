@@ -1,7 +1,10 @@
-import { createSlice, nanoid } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, nanoid } from '@reduxjs/toolkit'
+import { client } from '../../api/client'
 
 const initialState = {
   posts: [],
+  status: 'idle',
+  error: null,
 }
 
 const postsSlice = createSlice({
@@ -41,6 +44,11 @@ const postsSlice = createSlice({
       }
     },
   },
+})
+
+export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
+  const response = await client.get('/fakeApi/posts')
+  return response.data
 })
 
 export const { postAdded, postUpdated, reactionAdded } = postsSlice.actions
