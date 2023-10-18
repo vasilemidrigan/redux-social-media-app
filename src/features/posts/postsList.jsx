@@ -10,7 +10,9 @@ import { Spinner } from '../../components/Spinner'
 
 import { fetchPosts, selectAllPosts } from './postsSlice'
 
-const PostExcerpt = ({ post }) => {
+const PostExcerpt = ({ postData }) => {
+  const post = postData.status ? postData.data : postData
+
   return (
     <article className="post-excerpt">
       <h3>{post.title}</h3>
@@ -48,12 +50,17 @@ export const PostsList = () => {
     content = <Spinner text="Loading..." />
   } else if (postStatus === 'succeeded') {
     // Sort posts in reverse chronological order by datetime string
+
     const orderedPosts = posts
       .slice()
-      .sort((a, b) => b.date.localeCompare(a.date))
+      .sort((a, b) =>
+        b.status
+          ? b.data.date.localCompare(a.date)
+          : b.date.localeCompare(a.date)
+      )
 
-    content = orderedPosts.map((post) => (
-      <PostExcerpt key={post.id} post={post} />
+    content = orderedPosts.map((postData) => (
+      <PostExcerpt key={postData.status ? postData.data.id : postData.id} postData={postData} />
     ))
   } else if (postStatus === 'failed') {
     content = <div>{error}</div>

@@ -3,8 +3,8 @@ import { client } from '../../api/client'
 
 const initialState = {
   posts: [],
-  status: 'idle', 
-  error: null,  
+  status: 'idle',
+  error: null,
 }
 
 const postsSlice = createSlice({
@@ -57,8 +57,19 @@ const postsSlice = createSlice({
         state.status = 'failed'
         state.error = action.error.message
       })
+    builder.addCase(addNewPost.fulfilled, (state, action) => {
+      state.posts.push(action.payload)
+    })
   },
 })
+
+export const addNewPost = createAsyncThunk(
+  'posts/addNewPost',
+  async (initialPost) => {
+    const response = await client.post('/fakeApi/posts', initialPost)
+    return response
+  }
+)
 
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
   const response = await client.get('/fakeApi/posts')

@@ -3,11 +3,6 @@ import { client } from '../../api/client'
 
 const initialState = []
 
-export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
-  const response = await client.get('fakeApi/users')
-  return response.data
-})
-
 const usersSlice = createSlice({
   name: 'users',
   initialState,
@@ -17,6 +12,11 @@ const usersSlice = createSlice({
       return action.payload
     })
   },
+})
+
+export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
+  const response = await client.get('fakeApi/users')
+  return response.data
 })
 
 export default usersSlice.reducer
